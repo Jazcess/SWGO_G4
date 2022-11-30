@@ -11,37 +11,37 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 {
 	G4NistManager *nist = G4NistManager::Instance();  //the geant4 nist material database
 
-	G4Material *SiO2 = new G4Material("SiO2", 2.201*g/cm3, 2); //defining the silicone dioxide material class
-	SiO2->AddElement(nist->FindOrBuildElement("Si"), 1);  //adding the silicone element to the class
-	SiO2->AddElement(nist->FindOrBuildElement("O"), 2); //adding the oxygen element to the class
+	G4Material *SiO2 = new G4Material("SiO2", 2.201*g/cm3, 2); //defining the silicone dioxide material object
+	SiO2->AddElement(nist->FindOrBuildElement("Si"), 1);  //adding the silicone element to the object
+	SiO2->AddElement(nist->FindOrBuildElement("O"), 2); //adding the oxygen element to the object
 
-	G4Material *H2O = new G4Material("H2O", 1.000*g/cm3, 2); //defining h20 material class
-	H2O->AddElement(nist->FindOrBuildElement("H"), 2); //adding the hydrogen element to class
-	H2O->AddElement(nist->FindOrBuildElement("O"), 1); //adding the oxygen element to class
+	G4Material *H2O = new G4Material("H2O", 1.000*g/cm3, 2); //defining h20 material object
+	H2O->AddElement(nist->FindOrBuildElement("H"), 2); //adding the hydrogen element to object
+	H2O->AddElement(nist->FindOrBuildElement("O"), 1); //adding the oxygen element to object
 
-	G4Element *C = nist->FindOrBuildElement("C"); //creating the carbon material class
+	G4Element *C = nist->FindOrBuildElement("C"); //creating the carbon material object
 
-	G4Material *Aerogel = new G4Material("Aerogel", 0.200*g/cm3, 3); //creating the aerogel material class
-	Aerogel->AddMaterial(SiO2, 62.5*perCent);  //adding the silione dioxide material to aerogel class
-	Aerogel->AddMaterial(H2O, 37.4*perCent);  //adding the h20 material to aergoel class
-	Aerogel->AddElement(C, 0.1*perCent);  //adding the carbon material to aerogel class
+	G4Material *Aerogel = new G4Material("Aerogel", 0.200*g/cm3, 3); //creating the aerogel material object
+	Aerogel->AddMaterial(SiO2, 62.5*perCent);  //adding the silione dioxide material to aerogel object
+	Aerogel->AddMaterial(H2O, 37.4*perCent);  //adding the h20 material to aergoel object
+	Aerogel->AddElement(C, 0.1*perCent);  //adding the carbon material to aerogel object
 
 	G4double energy[2] = {1.239841939*eV/0.9, 1.239841939*eV/0.2}; //momentum of photons usng conversion factor *eV / wavlength of red light and blue light
 
 	G4double rindexAerogel[2] = {1.1, 1.1}; //refractive index of aerogel
 	G4double rindexWorld[2] = {1.0, 1.0}; //refractive index of the world volume (air)
 
-	G4MaterialPropertiesTable *mptAerogel = new G4MaterialPropertiesTable(); //creating aerogel material properties class
-	mptAerogel->AddProperty("RINDEX", energy, rindexAerogel, 2); //adding property to this class
+	G4MaterialPropertiesTable *mptAerogel = new G4MaterialPropertiesTable(); //creating aerogel material properties object
+	mptAerogel->AddProperty("RINDEX", energy, rindexAerogel, 2); //adding property to this object
 
-	Aerogel->SetMaterialPropertiesTable(mptAerogel); //assigning the Aergoel class the properties from the previous class created
+	Aerogel->SetMaterialPropertiesTable(mptAerogel); //assigning the Aergoel object the properties from the previous object created
 	
 	G4Material *worldMat = nist->FindOrBuildMaterial("G4_AIR"); //createing the world material (air)
 
-	G4MaterialPropertiesTable *mptWorld = new G4MaterialPropertiesTable(); //creating properites class for air
-	mptWorld->AddProperty("RINDEX", energy, rindexWorld, 2); //adding property to class
+	G4MaterialPropertiesTable *mptWorld = new G4MaterialPropertiesTable(); //creating properites object for air
+	mptWorld->AddProperty("RINDEX", energy, rindexWorld, 2); //adding property to object
 
-	worldMat->SetMaterialPropertiesTable(mptWorld); //assigning properties class to world material class
+	worldMat->SetMaterialPropertiesTable(mptWorld); //assigning properties object to world material object
 
 	G4Box *solidWorld = new G4Box("solidWorld", 0.5*m, 0.5*m, 0.5*m); //setting up world volume as a box
 
@@ -80,7 +80,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 
 void MyDetectorConstruction::ConstructSDandField()
 {
-    MySensitiveDetector *sensDet = new MySensitiveDetector("SensitiveDetector"); //creating a sensitive detector class
+    MySensitiveDetector *sensDet = new MySensitiveDetector("SensitiveDetector"); //creating a sensitive detector object
 
     if(logicDetector != NULL)
         logicDetector->SetSensitiveDetector(sensDet); //assigning the detectors as senstive detectors (it generates a hit when a track traverses its volume)
